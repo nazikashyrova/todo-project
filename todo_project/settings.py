@@ -14,8 +14,8 @@ import os.path
 from django.utils.translation import gettext_lazy as _, gettext_noop
 
 from pathlib import Path
-
 from django.conf import global_settings
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-4bl$&pyz&7%scvqtb-)^+&n!iy9qv4ohma=(z^xwf60*)vc2y2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['todo-projectt.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['*', '127.0.0.1']
 
 
 # Application definition
