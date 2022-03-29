@@ -1,0 +1,115 @@
+{% extends 'base/main.html' %}
+{% block content %}
+    {% load urls_extra %}
+    {% load i18n %}
+    <div class="header-bar">
+        <div>
+            <h1>{% trans "Hello" %} {{request.user|title}}</h1>
+            <h3 style="margin:0">{% trans "You have " %}<i>{{count}} </i> {% trans "incomplete task" %}</h3>
+        </div>
+
+        {% if request.user.is_authenticated %}
+            <a href="{% url 'logout' %}">{% trans "Logout" %}</a> {% else %}
+            <a href="{% url 'login' %}">{% trans "Login" %}</a> {% endif %}
+    </div>
+
+    {% get_current_language as LANGUAGE_CODE %}
+    <form action="{% url 'set_language' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ redirect_to }}">
+        <select name="language" id="">
+            {% get_available_languages as LANGUAGES %}
+            {% get_language_info_list for LANGUAGES as languages %}
+            {% for language in languages %}
+                <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected {% endif %}>
+                    {{ language.name_local}}
+                </option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="ok">
+    </form>
+
+    <div id="search-add-wrapper">
+        <a id="add-link"  href="{% url 'create'%}">  {% trans "+new todo" %}</a>
+
+        {% if todos|length > 0 %}
+
+
+            <div class="dropdown" style=" display: flex; float: right;margin: 10px 0px 10px 10px">
+                <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown"> <i class="fa fa-filter" aria-hidden="true"></i></button>
+                <ul class="dropdown-menu">
+                    <li><a class="btn btn-light" href="{% relative_url 'finished' 'filter' request.GET.urlencode %}" >{% trans "finished" %} </a></li>
+                    <li><a class="btn btn-light" href="{% relative_url 'notfinished' 'filter' request.GET.urlencode %}"   >{% trans " not finished" %}</a></li>
+                    <li><a class="btn btn-light" href="{% relative_url 'today' 'filter' request.GET.urlencode %}"  >{% trans "Today" %}</a></li>
+                    <li><a class="btn btn-light" href="{% relative_url 'last3' 'filter' request.GET.urlencode %}"   >{% trans "last 3 days" %}</a></li>
+                    <li><a class="btn btn-light" href="{% relative_url 'lastweek' 'filter' request.GET.urlencode %}"  >{% trans "last week" %}</a></li>
+                    <li><a class="btn btn-light" href="{% relative_url 'last30' 'filter' request.GET.urlencode %}"   >{% trans "last 30 DAYS" %}</a></li>
+                    <li><a class="btn btn-light" href="{% relative_url 'lastyear' 'filter' request.GET.urlencode %}"   >{% trans "last year" %}</a></li>
+                </ul>
+            </div>
+            </div>
+
+
+            <table class="container" id="table" style="text-align: center;align-items: center;  border: 3px solid dodgerblue;" data-toggle="table" >
+
+                <thead >
+                <tr>
+                    <th scope="col" >{% trans "Completed" %}
+                        {% if angle1 == '0' %}
+                            <a class="button" href="{% relative_url '-complete' 'sort' request.GET.urlencode %}" ><i class="fa fa-angle-up" aria-hidden="true"></i> </a>
+                        {% endif %}
+                        {% if angle1 == '1' %}
+                            <a class="button" href="{% relative_url 'complete' 'sort' request.GET.urlencode %}" ><i class="fa fa-angle-down" aria-hidden="true"></i> </a>
+                        {% endif %}
+                    </th>
+                    <th scope="col">{% trans "Title" %}
+                        {% if angle2 == '0' %}
+                            <a class="button" href="{% relative_url '-title' 'sort' request.GET.urlencode %}" ><i class="fa fa-angle-up" aria-hidden="true"></i> </a>
+                        {% endif %}
+                        {% if angle2 == '1' %}
+                            <a class="button" href="{% relative_url 'title' 'sort' request.GET.urlencode %}" ><i class="fa fa-angle-down" aria-hidden="true"></i> </a>
+                        {% endif %}
+
+                    </th>
+                    <th scope="col">{% trans "Date&Time" %}
+                        {% if angle3 == '0' %}
+                            <a class="button" href="{% relative_url '-created' 'sort' request.GET.urlencode %}" ><i class="fa fa-angle-up" aria-hidden="true"></i> </a>
+                        {% endif %}
+                        {% if angle3 == '1' %}
+                            <a class="button" href="{% relative_url 'created' 'sort' request.GET.urlencode %}" ><i class="fa fa-angle-down" aria-hidden="true"></i> </a>
+                        {% endif %}
+
+                    <th scope="col">{% trans "Update" %}</th>
+                </tr>
+                </thead>
+
+                <tbody >
+                {% for todo in todos %}
+                    {% if todo.complete %}
+                        <tr> <td class="bs-checkbox " ><input type="checkbox"  onclick="location.href='{% url 'yes_finish' todo.id %}'" checked> </td>
+                            <td>{{ todo.title }}</td>
+                            <td>{{ todo.created }}</td>
+                            <td> <a href="{% url 'update' todo.id %}?next={{request.GET.urlencode }}" ><h4><i class="fa fa-pencil" aria-hidden="true"></i></h4></a></td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td class="bs-checkbox " > <input type="checkbox" onclick="location.href='{% url 'no_finish' todo.id %}'" > </td>
+                            <td>{{ todo.title }}</td>
+                            <td>{{ todo.created }}</td>
+                            <td><a href="{% url 'update' todo.id %}?next={{request.GET.urlencode }}" > <h4><i class="fa fa-pencil" aria-hidden="true"></i></h4></a></td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            {% trans "no items" %}
+            <br><br>
+            <div>
+                <input class="btn btn-light" type=button value={% trans "exit" %} onClick="javascript:history.go(-1);"></div>
+        {% endif %}
+
+
+    </table>
+
+{% endblock content %}
