@@ -9,7 +9,10 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-import os.path
+import os
+import django_heroku
+import dj_database_url
+from decouple import config
 
 from django.utils.translation import gettext_lazy as _, gettext_noop
 
@@ -45,10 +48,8 @@ INSTALLED_APPS = [
     'base.apps.BaseConfig',
 ]
 
-MIDDLEWARE = [
+MIDDLEWARE = {
     'django.middleware.security.SecurityMiddleware',
-
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
@@ -57,7 +58,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
+
+    'whitenoise.middleware.WhiteNoiseMiddleware'
+
+}
 
 ROOT_URLCONF = 'todo_project.urls'
 
@@ -77,8 +81,6 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'todo_project.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
@@ -86,7 +88,7 @@ WSGI_APPLICATION = 'todo_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': os.path.join(BASE_DIR , 'db.sqlite3'),
     }
 }
 
@@ -140,9 +142,13 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
-
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+EMAIL_HOST_USER = 'nazikashyrowa@gmail.com'
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = True
+
+django_heroku.settings(locals())
