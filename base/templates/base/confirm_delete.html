@@ -1,0 +1,11 @@
+{% extends 'base/main.html' %}
+{% block content %}
+    {% load i18n %}
+    <a href="{% url 'todos' %}"></a>
+    <form method="POST">
+        {% csrf_token %}
+        {% trans "Really do you want delete" %}
+        <input type="submit" value={% trans "Delete"%}>
+    </form>
+
+{% endblock content %}
