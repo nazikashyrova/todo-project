@@ -35,7 +35,12 @@
         {% if todos|length > 0 %}
 
 
-            <div class="dropdown" style=" display: flex; float: right;margin: 10px 0px 10px 10px">
+        <div style=" display: flex; float: right;margin: 10px 0px 10px 10px">
+            <form class="form-inline my-2 my-lg-0" role="search" method="GET" action="" >
+                <input class="form-control mr-l-2" type="text" placeholder="Search..." name="search" value="{{request.GET.search}} ">
+                <button class="btn btn-outline-info" type="submit" ><i class="fa fa-search" ></i></button>
+            </form>
+            <div class="dropdown" >
                 <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown"> <i class="fa fa-filter" aria-hidden="true"></i></button>
                 <ul class="dropdown-menu">
                     <li><a class="btn btn-light" href="{% relative_url 'finished' 'filter' request.GET.urlencode %}" >{% trans "finished" %} </a></li>
@@ -47,7 +52,7 @@
                     <li><a class="btn btn-light" href="{% relative_url 'lastyear' 'filter' request.GET.urlencode %}"   >{% trans "last year" %}</a></li>
                 </ul>
             </div>
-            </div>
+        </div>
 
 
             <table class="container" id="table" style="text-align: center;align-items: center;  border: 3px solid dodgerblue;" data-toggle="table" >
