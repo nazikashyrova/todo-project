@@ -3,7 +3,7 @@ from django.utils.translation import gettext as _
 from django.utils import translation
 
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 
 from django.shortcuts import render, redirect, reverse
 
@@ -110,11 +110,24 @@ class TodoCreate(CreateView):
         return super(TodoCreate, self).form_valid(form)
 
 
-class TodoUpdate(LoginRequiredMixin,UpdateView):
+
+class TodoUpdate(UpdateView):
     model = Todo
     fields = ['title','description','complete']
-    success_url = reverse_lazy('todos')
     template_name = 'base/update.html'
+
+    def dispatch(self, *args, **kwargs):
+        return super(TodoUpdate, self).dispatch(*args, **kwargs)
+
+    def get_object(self, *args, **kwargs):
+        obj = super(TodoUpdate, self).get_object(*args, **kwargs)
+        if not obj.user == self.request.user:
+            raise Http404
+        return obj
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(TodoUpdate, self).form_valid(form)
 
 
 
