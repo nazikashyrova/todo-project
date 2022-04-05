@@ -56,6 +56,7 @@ class TodoList(LoginRequiredMixin, ListView):
         context['count'] = context['todos'].filter(complete=False).count
 
         search = self.request.GET.get('search') or ''
+        search = search[1:]
         if search:
             context['todos'] = context['todos'].filter(title__icontains=search)
 
