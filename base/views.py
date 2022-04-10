@@ -1,10 +1,14 @@
 from datetime import datetime, timedelta
+
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.utils.translation import gettext as _
 from django.utils import translation
 
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
 
+from django.contrib.auth.views import redirect_to_login
 from django.shortcuts import render, redirect, reverse
 
 from django.views.generic.list import ListView
@@ -110,12 +114,13 @@ class TodoCreate(CreateView):
         return super(TodoCreate, self).form_valid(form)
 
 
-
 class TodoUpdate(UpdateView):
     model = Todo
-    fields = ['title','description','complete']
+    fields = ['title','description']
     template_name = 'base/update.html'
+    success_url = '/'
 
+    @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(TodoUpdate, self).dispatch(*args, **kwargs)
 
@@ -128,7 +133,6 @@ class TodoUpdate(UpdateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super(TodoUpdate, self).form_valid(form)
-
 
 
 class TodoDelete(LoginRequiredMixin,DeleteView):
