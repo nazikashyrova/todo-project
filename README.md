@@ -4,8 +4,8 @@ TODO app built with Django
 ![todoimage](https://github.com/nazikashyrova/todo-project/blob/master/todo.jpg?raw=true "Title")
 
 ### Main features
-You will need django to be installed in you computer to run this app.
-Head over to https://www.djangoproject.com/download/ for the download guide
+You will need django to be installed in you computer to run this app. 
+basdan djangony nadip install etmelidigini gormek ucınhttps://docs.djangoproject.com/en/4.0/topics/install/ 
 Once you have downloaded django, go to the cloned repo directory and run the following command
       
 ### virtualenv
