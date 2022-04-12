@@ -13,16 +13,16 @@ ulanyan pacageleri bir yerde goymak ucun venv doretmeli doretman hem işledip bi
 
 # install virtual environment
 
-unix/macOS:  python3 -m venv env
+unix/macOS: $  python3 -m venv env
 
-windows : py -m venv env
+windows :$  py -m venv env
 
 
 # Activate virtual environment
 
-unix/macOS: source env/bin/activate
+unix/macOS:$  source env/bin/activate
 
-windows : .\env\Scripts\activate
+windows : $ .\env\Scripts\activate
 
 
 If you want to switch projects or otherwise leave your virtual environment, simply run:
