@@ -1,2 +1,2 @@
 TODO app built with Django
-<img src="master/todo.png" width="128"/>
+<img src="https://github.com/nazikashyrova/todo-project/tree/master/todo.png" width="128"/>
