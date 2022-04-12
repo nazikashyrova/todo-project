@@ -12,10 +12,11 @@ Once you have downloaded django, go to the cloned repo directory and run the fol
 ulanyan pacageleri bir yerde goymak ucun venv doretmeli doretman hem işledip bilyas...
 
 # install virtual environment
+unix/macOS:  
+$ python3 -m venv env
 
-$  unix/macOS:  python3 -m venv env
-
-$  windows : py -m venv env
+windows : 
+$ py -m venv env
 
 
 # Activate virtual environment
