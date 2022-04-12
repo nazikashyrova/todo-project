@@ -1,3 +1,3 @@
 TODO app built with Django
 
-![todo_image](https://github.com/nazikashyrova/todo-project/tree/master/todo.jpg)
+[Default Home View](https://github.com/nazikashyrova/todo-project/tree/master/todo.jp?raw=true "Title")
