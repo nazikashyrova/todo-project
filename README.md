@@ -1,2 +1,2 @@
 TODO app built with Django
-<img src="/todo.png" width="128"/>
+<img src="master/todo.png" width="128"/>
