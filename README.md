@@ -1,2 +1,2 @@
 TODO app built with Django
-![alt text](http://todo.png)
+![alt text](todo.png)
