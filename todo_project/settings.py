@@ -27,10 +27,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
-
-
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['herokuapp.com', '127.0.0.1']
 
@@ -150,3 +148,4 @@ EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = True
 
 django_heroku.settings(locals())
+
