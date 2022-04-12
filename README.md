@@ -1,90 +1,52 @@
-{% if False %}
-
 # Introduction
-
-The goal of this project is to provide minimalistic django project template that everyone can use, which _just works_ out of the box and has the basic setup you can expand on. 
-
-Template is written with django 1.11 and python 3 in mind.
+TODO app built with Django
 
 ![todoimage](https://github.com/nazikashyrova/todo-project/blob/master/todo.jpg?raw=true "Title")
 
 ### Main features
-
-* Separated dev and production settings
-
-* Example app with custom user model
-
-* Bootstrap static files included
-
-* User registration and logging in as demo
-
-* Procfile for easy deployments
-
-* Separated requirements files
-
-* SQLite by default if no env variable is set
-
-# Usage
-
-To use this template to start your own project:
-
-### Existing virtualenv
-
-If your project is already in an existing python3 virtualenv first install django by running
-
-    $ pip install django
-    
-And then run the `django-admin.py` command to start the new project:
-
-    $ django-admin.py startproject \
-      --template=https://github.com/nikola-k/django-template/zipball/master \
-      --extension=py,md \
-      <project_name>
+You will need django to be installed in you computer to run this app.
+Head over to https://www.djangoproject.com/download/ for the download guide
+Once you have downloaded django, go to the cloned repo directory and run the following command
       
-### No virtualenv
+### virtualenv
+ulanyan pacageleri bir yerde goymak ucun venv doretmeli doretman hem işledip bilyas...
 
-This assumes that `python3` is linked to valid installation of python 3 and that `pip` is installed and `pip3`is valid
-for installing python 3 packages.
+# install virtual environment
 
-Installing inside virtualenv is recommended, however you can start your project without virtualenv too.
+unix/macOS:  python3 -m venv env
 
-If you don't have django installed for python 3 then run:
+windows : py -m venv env
 
-    $ pip3 install django
-    
-And then:
 
-    $ python3 -m django startproject \
-      --template=https://github.com/nikola-k/django-template/zipball/master \
-      --extension=py,md \
-      <project_name>
-      
-      
-After that just install the local dependencies, run migrations, and start the server.
+# Activate virtual environment
 
-{% endif %}
+unix/macOS: source env/bin/activate
 
-# {{ project_name|title }}
+windows : .\env\Scripts\activate
 
-# Getting Started
 
-First clone the repository from Github and switch to the new directory:
+If you want to switch projects or otherwise leave your virtual environment, simply run:
+ 
+ deactivate
+ 
+# Installing packages
+Now that you’re in your virtual environment you can install packages. Let’s install the Requests library from the Python Package Index (PyPI):
 
-    $ git clone git@github.com/USERNAME/{{ project_name }}.git
-    $ cd {{ project_name }}
-    
-Activate the virtualenv for your project.
-    
-Install project dependencies:
 
-    $ pip install -r requirements/local.txt
-    
-    
+Unix/macOS: python3 -m pip install -r requirements.txt
+
+Windows: py -m pip install -r requirements.txt  
+  
 Then simply apply the migrations:
+    $ python manage.py makemigrations
 
     $ python manage.py migrate
     
+We need to create an admin user to run this App. On the terminal, type the following command and provide username, password and email for the admin user
 
-You can now run the development server:
+$ python manage.py createsuperuser
 
-    $ python manage.py runserver
+We just need to start the server now and then we can start using our TODO App. Start the server by following command
+
+$ python manage.py runserver
+Once the server is hosted, head over to http://127.0.0.1:8000 for the App.
