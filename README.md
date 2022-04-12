@@ -37,8 +37,7 @@ If you want to switch projects or otherwise leave your virtual environment, simp
     $ deactivate
  
 # Installing packages
-Now that you’re in your virtual environment you can install packages. Let’s install the Requests library from the Python Package Index (PyPI):
-
+Now that you’re in your virtual environment you can install packages. Let’s install:
 
 Unix/macOS: 
 
