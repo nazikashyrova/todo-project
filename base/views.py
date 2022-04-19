@@ -55,7 +55,11 @@ class TodoList(ListView):
 
     def get_queryset(self):
         if self.request.user.is_authenticated:
-            return (Todo.objects.all().order_by("-created").filter(user=self.request.user))
+            return (
+                Todo.objects.all()
+                .order_by("-created_date")
+                .filter(user=self.request.user)
+            )
         return self.queryset.filter(user=self.request.user)
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -134,6 +138,7 @@ class TodoUpdate(UpdateView):
         obj = self.get_object()
         if obj.user != self.request.user:
             return redirect(obj)
+
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
@@ -146,3 +151,10 @@ class TodoDelete(LoginRequiredMixin,DeleteView):
     context_object_name = 'todo'
     success_url = reverse_lazy('todos')
     template_name = 'base/confirm_delete.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if obj.user != self.request.user:
+            return redirect(obj)
+
+        return super().dispatch(request, *args, **kwargs)
