@@ -1,26 +1,25 @@
 from datetime import datetime, timedelta
-
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
-from django.utils.translation import gettext as _
-from django.utils import translation
-
-from django.shortcuts import render
-from django.http import HttpResponse, Http404
-
-from django.contrib.auth.views import redirect_to_login
-from django.shortcuts import render, redirect, reverse
-
-from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from django.urls import reverse_lazy
 from .models import Todo
 
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import redirect_to_login
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import login
+
+from django.utils.decorators import method_decorator
+from django.utils.translation import gettext as _
+from django.utils import translation
+
+from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render
+from django.http import HttpResponse, Http404
+
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 
 
 class LoginView(LoginView):
@@ -50,9 +49,14 @@ class Register(FormView):
         return super(Register, self).get(*args,**kwargs)
 
 
-class TodoList(LoginRequiredMixin, ListView):
+class TodoList(ListView):
     model = Todo
     context_object_name = 'todos'
+
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            return (Todo.objects.all().order_by("-created").filter(user=self.request.user))
+        return self.queryset.filter(user=self.request.user)
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -109,6 +113,12 @@ class TodoCreate(CreateView):
     success_url = reverse_lazy('todos')
     template_name = 'base/create.html'
 
+    def dispatch(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if obj.user != self.request.user:
+            return redirect(obj)
+        return super().dispatch(request, *args, **kwargs)
+
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super(TodoCreate, self).form_valid(form)
@@ -120,15 +130,11 @@ class TodoUpdate(UpdateView):
     template_name = 'base/update.html'
     success_url = '/'
 
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(TodoUpdate, self).dispatch(*args, **kwargs)
-
-    def get_object(self, *args, **kwargs):
-        obj = super(TodoUpdate, self).get_object(*args, **kwargs)
-        if not obj.user == self.request.user:
-            raise Http404
-        return obj
+    def dispatch(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if obj.user != self.request.user:
+            return redirect(obj)
+        return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -140,17 +146,3 @@ class TodoDelete(LoginRequiredMixin,DeleteView):
     context_object_name = 'todo'
     success_url = reverse_lazy('todos')
     template_name = 'base/confirm_delete.html'
-
-
-def yes_finish(request, Todos_id):
-    todo = Todo.objects.get(pk=Todos_id)
-    todo.complete = False
-    todo.save()
-    return redirect("todos")
-
-
-def no_finish(request, Todos_id):
-    todo = Todo.objects.get(pk=Todos_id)
-    todo.complete = True
-    todo.save()
-    return redirect("todos")
