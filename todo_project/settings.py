@@ -10,7 +10,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'Optional default value')
 
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['herokuapp.com', '127.0.0.1']
 
 AUTH_USER_MODEL = 'api.userProfile'
 
