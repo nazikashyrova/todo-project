@@ -19,10 +19,8 @@ from django.utils.translation import gettext_lazy as _, gettext_noop
 from pathlib import Path
 from django.conf import global_settings
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -34,7 +32,6 @@ SECRET_KEY = 'django-insecure-4bl$&pyz&7%scvqtb-)^+&n!iy9qv4ohma=(z^xwf60*)vc2y2
 DEBUG = True
 
 ALLOWED_HOSTS = ['herokuapp.com', '127.0.0.1']
-
 
 # Application definition
 
@@ -80,18 +77,17 @@ TEMPLATES = [
     },
 ]
 
-
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
     'default': {
-       'ENGINE': 'django.db.backends.sqlite3',
-     'NAME': os.path.join(BASE_DIR , 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-#db_from_env = dj_database_url.config(conn_max_age=500)
-#DATABASES['default'].update(db_from_env)
+# db_from_env = dj_database_url.config(conn_max_age=500)
+# DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -111,13 +107,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
 LANGUAGE_CODE = 'en'
 
-#LANGUAGE_CODE = 'tk'
+# LANGUAGE_CODE = 'tk'
 
 LOCALE_PATHS = [
     os.path.join(BASE_DIR, 'locale')
