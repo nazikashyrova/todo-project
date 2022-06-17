@@ -59,7 +59,7 @@ EMAIL_PORT = 587
 
 # PRODUCTION:
 # ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['hidden_name.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['herokuapp.com', '127.0.0.1']
 
 # PRODUCTION:
 LOGGING = {
@@ -134,8 +134,6 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'finalproject.wsgi.application'
-
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
@@ -146,7 +144,7 @@ DATABASES = {
     }
 }
 
-AUTH_USER_MODEL = "restaurants.User"
+AUTH_USER_MODEL = "todo.User"
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -171,6 +169,10 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
+LANGUAGES = [
+    ('tk', 'Turkmen'),
+    ('en', 'English'),
+]
 
 TIME_ZONE = 'UTC'
 
