@@ -29,7 +29,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'django-insecure-4bl$&pyz&7%scvqtb-)^+&n!iy9qv4ohma=(z^xwf60*)vc2y2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['herokuapp.com', '127.0.0.1']
 
@@ -55,6 +55,7 @@ MIDDLEWARE = {
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware'
 }
 
 ROOT_URLCONF = 'todo_project.urls'
