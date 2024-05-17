@@ -17,11 +17,14 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormVi
 from django.urls import reverse_lazy
 from .models import Todo
 
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LogoutView as BaseLogoutView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import login
 
+class LogoutView(BaseLogoutView):
+    next_page = reverse_lazy('login')
 
 class LoginView(LoginView):
     template_name = 'base/login.html'

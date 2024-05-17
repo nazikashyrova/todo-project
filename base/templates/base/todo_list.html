@@ -9,7 +9,10 @@
         </div>
 
         {% if request.user.is_authenticated %}
-            <a href="{% url 'logout' %}">{% trans "Logout" %}</a> {% else %}
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button class="btn"type="submit">{% trans "Logout" %}</button>
+        </form>{% else %}
             <a href="{% url 'login' %}">{% trans "Login" %}</a> {% endif %}
     </div>
 
