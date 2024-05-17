@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
-import django_heroku
 import dj_database_url
 from django.conf.global_settings import DATABASES
 
@@ -30,7 +29,7 @@ SECRET_KEY = "DJANGO_SECRET_KEY"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['digitalocean.app', '127.0.0.1']
 
 # Application definition
 
@@ -114,7 +113,7 @@ LANGUAGE_CODE = 'en'
 # LANGUAGE_CODE = 'tk'
 
 LOCALE_PATHS = [
-    os.path.join(BASE_DIR, 'locale')
+    os.path.join(BASE_DIR, 'static')
 ]
 LANGUAGES = [
     ('tk', 'Turkmen'),
@@ -131,7 +130,7 @@ LOGIN_URL = 'login'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
@@ -145,4 +144,4 @@ EMAIL_HOST_USER = 'nazikashyrowa@gmail.com'
 EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = True
 
-django_heroku.settings(locals())
+
