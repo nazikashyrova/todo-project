@@ -1,24 +1,35 @@
-# test_todo_app.py
-
-import pytest
+from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
 from base.models import Todo
 
-@pytest.mark.django_db
-def test_todo_creation():
-    todo = Todo.objects.create(title='Test Todo', description='This is a test todo item')
-    assert todo.title == 'Test Todo'
-    assert todo.description == 'This is a test todo item'
-    assert not todo.completed
+class TodoTestCase(TestCase):
+    def setUp(self):
+        self.user1 = User.objects.create_user(username='testuser1', password='testpass1')
+        self.user2 = User.objects.create_user(username='testuser2', password='testpass2')
+        
+        self.todo1 = Todo.objects.create(title='Test Todo 1', complete=False, user=self.user1)
+        self.todo2 = Todo.objects.create(title='Test Todo 2', complete=False, user=self.user2)
 
-@pytest.mark.django_db
-def test_todo_list_view(client):
-    response = client.get(reverse('todo-list'))
-    assert response.status_code == 200
+    def test_todo_creation(self):
+        self.assertEqual(self.todo1.title, 'Test Todo 1')
+        self.assertFalse(self.todo1.complete)
+        self.assertEqual(self.todo1.user, self.user1)
 
-@pytest.mark.django_db
-def test_todo_detail_view(client):
-    todo = Todo.objects.create(title='Test Todo')
-    response = client.get(reverse('todo-detail', kwargs={'pk': todo.pk}))
-    assert response.status_code == 200
+    def test_todo_update(self):
+        self.todo1.complete = True
+        self.todo1.save()
+        updated_todo = Todo.objects.get(pk=self.todo1.pk)
+        self.assertTrue(updated_todo.complete)
+
+    def test_todo_delete(self):
+        todo_count = Todo.objects.count()
+        self.todo1.delete()
+        self.assertEqual(Todo.objects.count(), todo_count - 1)
+
+    def test_todo_list_view(self):
+        self.client.login(username='testuser1', password='testpass1')
+        response = self.client.get(reverse('todos'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Test Todo 1')
+        self.assertNotContains(response, 'Test Todo 2')
