@@ -157,3 +157,9 @@ def no_finish(request, Todos_id):
     todo.complete = True
     todo.save()
     return redirect("todos")
+
+def set_language(request):
+    lang_code = request.POST.get('language')
+    translation.activate(lang_code)
+    request.session['django_language'] = lang_code
+    return redirect("todos")

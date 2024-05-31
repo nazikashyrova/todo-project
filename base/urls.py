@@ -23,5 +23,7 @@ urlpatterns = [
     path('delete/<int:pk>/', TodoDelete.as_view(), name='delete'),
 
     path('yes_finish/<Todos_id>', views.yes_finish, name="yes_finish"),
-    path('no_finish/<Todos_id>', views.no_finish, name="no_finish")
+    path('no_finish/<Todos_id>', views.no_finish, name="no_finish"),
+    
+    path('set_language/', views.set_language, name='set_language')
 ]

@@ -11,7 +11,7 @@
         {% if request.user.is_authenticated %}
         <form action="{% url 'logout' %}" method="post">
             {% csrf_token %}
-            <button class="btn"type="submit">{% trans "Logout" %}</button>
+            <button class="btn"type="submit">{% translate "Logout" %}</button>
         </form>{% else %}
             <a href="{% url 'login' %}">{% trans "Login" %}</a> {% endif %}
     </div>
@@ -34,7 +34,7 @@
 
 
 
-    <a id="add-link"  href="{% url 'create'%}">  {% trans "+new todo" %}</a>
+    <a id="add-link"  href="{% url 'create'%}">  {% translate "+new todo" %}</a>
 
     {% if todos|length > 0 %}
         <div style=" display: flex; float: right;margin: 10px 0px 10px 10px">
