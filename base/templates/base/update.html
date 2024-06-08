@@ -1,32 +1,26 @@
 {% extends 'base/main.html' %}
 {% block content %}
-    {% load i18n %}
-    <br><br>
-    <div>
-        <form method="post">
-            {% csrf_token %}
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label">
-                    {% trans "To-Do Title" %}</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="title" value="{{todo.title }}">
-                </div>
+    <div class="flex flex-col items-center min-h-screen bg-blue-100 py-10">
+        <div class="flex mt-10 justify-center items-center">
+            <div class="w-full max-w-md justify-center items-center p-8 rounded-lg shadow-md bg-blue-300">
+                <h1 class="text-2xl font-semibold mb-6 text-center">Update Todo</h1>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-4">
+                        <label class="block font-bold mb-2" for="title">To-Do Title</label>
+                        <input type="text" class="form-control" name="title" value="{{ todo.title }}" id="title">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block font-bold mb-2" for="description">Description</label>
+                        <input type="text" class="form-control" name="description" value="{{ todo.description }}" id="description">
+                    </div>
+                    <div class="mt-6">
+                        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" name='next' value=urlencode>save</button>
+                        <a class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" href="{% url 'delete' todo.id %}?next={{request.GET.urlencode }}" role="button">delete</a>
+                        <input class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded" type=button value= "exit" onClick="javascript:history.go(-1);">
+                    </div>
+                </form>
             </div>
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label">{% trans "Description" %}</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="description" value=" {{ todo.description }}">
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-sm-10">
-                    <button type="submit" class="btn btn-info" name='next' value=urlencode > {% trans "save" %} </button>
-                    <a class="btn btn-warning" href="{% url 'delete' todo.id %}?next={{request.GET.urlencode }}"  role="button"> {% trans "delete" %} </a>
-                    <input class="btn btn-light" type=button value= {% trans "exit" %} onClick="javascript:history.go(-1);">
-                </div>
-            </div>
-        </form>
+        </div>
     </div>
-    </div>
-
 {% endblock content %}

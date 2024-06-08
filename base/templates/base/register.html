@@ -1,13 +1,54 @@
 {% extends 'base/main.html' %}
 {% block content %}
-    {% load i18n %}
-    {% trans "REGISTER" %}
-
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value= {% trans " register" %}>
-    </form>
-    {% trans "already have an account" %}
-    <a href="{% url 'login' %}">{% trans "login" %}</a>
+    <div class="flex flex-col items-center justify-center min-h-screen bg-blue-100">
+        <div class="flex mt-10 justify-center items-center">
+            <div class="w-full max-w-md justify-center items-center p-8 rounded-lg shadow-md bg-blue-300">
+                <h1 class="text-2xl font-semibold mb-6 text-center">Register</h1>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    <div class="mb-4">
+                        {{ form.username.label_tag }}
+                        <div class="w-full">
+                            {{ form.username }}
+                        </div>
+                        {% for error in form.username.errors %}
+                            <p class="text-red-500">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="mb-4">
+                        {{ form.password1.label_tag }}
+                        <div class="w-full">
+                            {{ form.password1 }}
+                        </div>
+                        {% for error in form.password1.errors %}
+                            <p class="text-red-500">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="mb-4">
+                        {{ form.password2.label_tag }}
+                        <div class="w-full">
+                            {{ form.password2 }}
+                        </div>
+                        {% for error in form.password2.errors %}
+                            <p class="text-red-500">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="mt-6">
+                        <button type="submit" class="w-full bg-blue-900 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded">
+                            Register
+                        </button>
+                    </div>
+                </form>
+                <p class="mt-4 text-center">Already have an account? <a href="{% url 'login' %}" class="text-blue-700">Login</a></p>
+            </div>
+        </div>
+    </div>
 {% endblock content %}
+
+<style>
+    input {
+        width: 100%;
+        padding: 0.5rem 0.75rem;
+    }
+</style>

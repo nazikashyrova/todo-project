@@ -1,12 +1,44 @@
 {% extends 'base/main.html' %}
+{% load i18n %}
 {% block content %}
-    {% load i18n %}
-    {% trans "LOGIN" %}
-
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value= {% trans "login" %}>
-    </form>
-    {% trans " don't have an account" %} <a href="{% url 'register' %}"> {% trans "register" %}</a>
+    <div class="flex flex-col items-center justify-center min-h-screen bg-blue-100">
+        <div class="flex mt-10 justify-center items-center">
+            <div class="w-full max-w-md justify-center items-center p-8 rounded-lg shadow-md bg-blue-300">
+                <h1 class="text-2xl font-semibold mb-6 text-center">{% trans "LOGIN" %}</h1>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    <div class="mb-4">
+                        {{ form.username.label_tag }}
+                        <div class="w-full">
+                            {{ form.username }}
+                        </div>
+                        {% for error in form.username.errors %}
+                            <p class="text-red-500">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="mb-4">
+                        {{ form.password.label_tag }}
+                        <div class="w-full">
+                            {{ form.password }}
+                        </div>
+                        {% for error in form.password.errors %}
+                            <p class="text-red-500">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="mt-6">
+                        <input type="submit" value="{% trans "login" %}" class="w-full bg-blue-900 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded">
+                    </div>
+                </form>
+                <p class="mt-4 text-center">{% trans " don't have an account" %} <a href="{% url 'register' %}" class="text-blue-700">{% trans "register" %}</a></p>
+            </div>
+        </div>
+    </div>
 {% endblock content %}
+
+<style>
+    input {
+        width: 100%;
+        padding: 0.5rem 0.75rem;
+    }
+</style>

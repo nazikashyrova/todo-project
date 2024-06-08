@@ -1,11 +1,23 @@
 {% extends 'base/main.html' %}
 {% block content %}
     {% load i18n %}
-    <a href="{% url 'todos' %}"></a>
-    <form method="POST">
-        {% csrf_token %}
-        {% trans "Really do you want delete" %}
-        <input type="submit" value={% trans "Delete"%}>
-    </form>
+    <div class="flex flex-col items-center justify-center min-h-screen bg-blue-100">
+        <div class="flex mt-10 justify-center items-center">
+            <div class="w-full max-w-md justify-center items-center p-8 rounded-lg shadow-md bg-blue-300">
+                <h1 class="text-2xl font-semibold mb-6 text-center">{% trans "Delete Todo" %}</h1>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="mb-4">
+                        <p class="text-center">{% trans "Really do you want delete" %}</p>
+                    </div>
+                    <div class="mt-6">
+                        <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
+                        <input class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded" type=button value= "exit" onClick="javascript:history.go(-1);">
+                  
+                    </div>
 
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock content %}
