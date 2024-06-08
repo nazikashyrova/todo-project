@@ -7,21 +7,6 @@ from django.utils.translation import gettext_lazy as _, gettext_noop
 from pathlib import Path
 from django.conf import global_settings
 
-import sentry_sdk
-
-sentry_sdk.init(
-    dsn="https://586644fe90b642efc5203d524df7ea08@o4507308009390080.ingest.de.sentry.io/4507308021121104",
-    # Set traces_sample_rate to 1.0 to capture 100%
-    # of transactions for performance monitoring.
-    traces_sample_rate=1.0,
-    # Set profiles_sample_rate to 1.0 to profile 100%
-    # of sampled transactions.
-    # We recommend adjusting this value in production.
-    profiles_sample_rate=1.0,
-)
-
-
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -44,7 +29,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'base.apps.BaseConfig',
-    'whitenoise.runserver_nostatic'
+    'whitenoise.runserver_nostatic',
+    'fontawesomefree'
 ]
 
 MIDDLEWARE = [
@@ -72,6 +58,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+            ],
+        'builtins': [
+                'django.templatetags.static',
             ],
         },
     },
