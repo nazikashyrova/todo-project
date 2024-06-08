@@ -9,7 +9,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, Http404
 
 from django.contrib.auth.views import redirect_to_login
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
@@ -145,21 +145,8 @@ class TodoDelete(LoginRequiredMixin,DeleteView):
     template_name = 'base/confirm_delete.html'
 
 
-def yes_finish(request, Todos_id):
-    todo = Todo.objects.get(pk=Todos_id)
-    todo.complete = False
+def toggle_finish(request, Todos_id):
+    todo = get_object_or_404(Todo, pk=Todos_id)
+    todo.complete = not todo.complete
     todo.save()
-    return redirect("todos")
-
-
-def no_finish(request, Todos_id):
-    todo = Todo.objects.get(pk=Todos_id)
-    todo.complete = True
-    todo.save()
-    return redirect("todos")
-
-def set_language(request):
-    lang_code = request.POST.get('language')
-    translation.activate(lang_code)
-    request.session['django_language'] = lang_code
     return redirect("todos")

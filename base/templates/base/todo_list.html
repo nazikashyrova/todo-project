@@ -81,38 +81,22 @@
             </thead>
             <tbody>
                 {% for todo in todos %}
-    {% if todo.complete %}
-        <tr>
-            <td class="flex items-center justify-center">
-                <input type="checkbox" class="form-checkbox" onclick="location.href='{% url 'yes_finish' todo.id %}'" checked>
-            </td>
-            <td class="text-center">{{ todo.title }}</td>
-            <td class="text-center">{{ todo.created }}</td>
-            <td class="text-center">
-                {% if request.user.is_authenticated %}
-                    <a href="{% url 'update' todo.id %}" class="text-blue-500 hover:text-blue-700">
-                        <i class="fas fa-pencil-alt"></i>
-                    </a>
-                {% endif %}
-            </td>
-        </tr>
-    {% else %}
-        <tr>
-            <td class="flex items-center justify-center">
-                <input type="checkbox" class="form-checkbox" onclick="location.href='{% url 'no_finish' todo.id %}'">
-            </td>
-            <td class="text-center">{{ todo.title }}</td>
-            <td class="text-center">{{ todo.created }}</td>
-            <td class="text-center">
-                {% if request.user.is_authenticated %}
-                    <a href="{% url 'update' todo.id %}" class="text-blue-500 hover:text-blue-700">
-                        <i class="fas fa-pencil-alt" aria-hidden="true"></i>
-                    </a>
-                {% endif %}
-            </td>
-        </tr>
-    {% endif %}
-{% endfor %}
+                <tr>
+                    <td class="flex items-center justify-center">
+                        <input type="checkbox" class="form-checkbox" onclick="location.href='{% url 'toggle_finish' todo.id %}'" {% if todo.complete %} checked {% endif %}>
+                    </td>
+                    <td class="text-center">{{ todo.title }}</td>
+                    <td class="text-center">{{ todo.created }}</td>
+                    <td class="text-center">
+                        {% if request.user.is_authenticated %}
+                            <a href="{% url 'update' todo.id %}" class="text-blue-500 hover:text-blue-700">
+                                <i class="fas fa-pencil-alt"></i>
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            
             </tbody>
             </table>
             

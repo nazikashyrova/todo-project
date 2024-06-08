@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import TodoList, TodoUpdate, TodoCreate, TodoDelete, LoginView, Register
+from .views import TodoList, TodoUpdate, TodoCreate, TodoDelete, LoginView, Register, toggle_finish
 from .import views
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth import views as auth_views
@@ -22,8 +22,6 @@ urlpatterns = [
     path('update/<int:pk>/', TodoUpdate.as_view(), name='update'),
     path('delete/<int:pk>/', TodoDelete.as_view(), name='delete'),
 
-    path('yes_finish/<Todos_id>', views.yes_finish, name="yes_finish"),
-    path('no_finish/<Todos_id>', views.no_finish, name="no_finish"),
+    path('toggle_finish/<int:Todos_id>/', toggle_finish, name="toggle_finish"),
     
-    path('set_language/', views.set_language, name='set_language')
 ]
