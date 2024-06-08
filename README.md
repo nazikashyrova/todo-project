@@ -1,7 +1,7 @@
 # Introduction
 TODO app built with Django
 
-![todoimage](https://github.com/nazikashyrova/todo-project/blob/master/todo.png?raw=true "Title")
+![todoimage](https://github.com/nazikashyrova/todo-project/blob/main/todo.png?raw=true "Title")
 
 ### Installation
 You will need django to be installed in you computer to run this app. 
